@@ -40,7 +40,7 @@ const Services = () => {
 									Price: ${service.price}
 								</p>
 								<Link to={`/checkout/${service._id}`}>
-									<button className="text-red-500  ">
+									<button title="check out" className="text-red-500  ">
 										<FaArrowRight />
 									</button>
 								</Link>

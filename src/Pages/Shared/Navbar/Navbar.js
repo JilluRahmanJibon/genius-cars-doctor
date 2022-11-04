@@ -10,9 +10,20 @@ const Navbar = () => {
 			<li className="font-semibold">
 				<Link to="/">Home</Link>
 			</li>
-			<li className="font-semibold">
-				<Link to="/signin">Sign In</Link>
-			</li>
+			{user?.uid ? (
+				<>
+					<li className="font-semibold">
+						<Link to="/orders">Orders</Link>
+					</li>
+					<li className="font-semibold">
+						<Link>Log out </Link>
+					</li>
+				</>
+			) : (
+				<li className="font-semibold">
+					<Link to="/signin">Sign In</Link>
+				</li>
+			)}
 		</>
 	);
 

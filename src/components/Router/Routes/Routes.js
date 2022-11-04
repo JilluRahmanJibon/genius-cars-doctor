@@ -3,7 +3,9 @@ import CheckOut from "../../../Pages/CheckOut/CheckOut";
 import Home from "../../../Pages/Home/Home/Home";
 import SignIn from "../../../Pages/Login/SignIn/SignIn";
 import SignUp from "../../../Pages/Login/SignUp/SignUp";
+import Orders from "../../../Pages/Orders/Orders";
 import Root from "../../Layout/Root";
+import PrivateRouter from "../PrivateRouter/PrivateRouter";
 
 const Routes = createBrowserRouter([
 	{
@@ -14,6 +16,14 @@ const Routes = createBrowserRouter([
 			{ path: "/signin", element: <SignIn /> },
 			{ path: "/signup", element: <SignUp /> },
 			{ path: "/checkout/:id", element: <CheckOut /> },
+			{
+				path: "/orders",
+				element: (
+					<PrivateRouter>
+						<Orders />
+					</PrivateRouter>
+				),
+			},
 		],
 	},
 ]);

@@ -29,23 +29,25 @@ const AuthProvider = ({ children }) => {
 	// manage user
 	useEffect(() => {
 		const unSubscribe = onAuthStateChanged(auth, currentUser => {
-			if (currentUser) {
-				// User is signed in, see docs for a list of available properties
-				// https://firebase.google.com/docs/reference/js/firebase.User
-				// ...
-			} else {
-				// User is signed out
-				// ...
-			}
+			setLoading(false);
+			setUser(currentUser);
 		});
 		return () => {
 			unSubscribe();
 		};
 	}, []);
 	// auth info
-	const value = { user, createUserWithEmailandPass, signInUserWithEmailPass };
+	const value = {
+		user,
+		loading,
+		setLoading,
+		createUserWithEmailandPass,
+		signInUserWithEmailPass,
+	};
 	return (
 		<div>
+			{" "}
+			{loading && "loading..."}
 			<AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 		</div>
 	);
