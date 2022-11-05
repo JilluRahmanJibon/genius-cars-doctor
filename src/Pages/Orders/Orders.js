@@ -3,16 +3,28 @@ import { AuthContext } from "../../components/Contexts/AuthProvider/AuthProvider
 import OrderRow from "./OrderRow";
 
 const Orders = () => {
-	const { user } = useContext(AuthContext);
+	const { user, signOutUser } = useContext(AuthContext);
 	const [orders, setOrders] = useState([]);
 	useEffect(() => {
-		fetch(`http://localhost:8000/orders?email=${user?.email}`)
-			.then(res => res.json())
+		fetch(
+			`https://genius-car-server-xi-one.vercel.app/orders?email=${user?.email}`,
+			{
+				headers: {
+					authorization: `Bearer ${localStorage.getItem("genius-token")}`,
+				},
+			}
+		)
+			.then(res => {
+				if (res.status === 401 || res.status === 403) {
+					return signOutUser();
+				}
+				return res.json();
+			})
 			.then(result => setOrders(result));
-	}, [user?.email]);
+	}, [user?.email, signOutUser]);
 	return (
 		<div>
-			<h1 className="text-center">You have {orders.length} Orders.</h1>
+			<h1 className="text-center">You have {orders?.length} Orders.</h1>
 			<div className="overflow-x-auto w-full">
 				<table className="table w-full">
 					<thead>

@@ -4,19 +4,23 @@ import logo from "../../assets/logo.svg";
 import { FaBars } from "react-icons/fa";
 import { AuthContext } from "../../../components/Contexts/AuthProvider/AuthProvider";
 const Navbar = () => {
-	const { user } = useContext(AuthContext);
+	const { user, signOutUser } = useContext(AuthContext);
 	const menuItems = (
 		<>
 			<li className="font-semibold">
 				<Link to="/">Home</Link>
 			</li>
-			{user?.uid ? (
+			{user?.email ? (
 				<>
 					<li className="font-semibold">
 						<Link to="/orders">Orders</Link>
 					</li>
 					<li className="font-semibold">
-						<Link>Log out </Link>
+						<button
+							onClick={() => signOutUser()}
+							className="  btn-outline btn-ghost">
+							Log out
+						</button>
 					</li>
 				</>
 			) : (

@@ -8,7 +8,7 @@ const CheckOut = () => {
 	const [service, setService] = useState({});
 	const { title, _id, price } = service;
 	useEffect(() => {
-		fetch(`http://localhost:8000/services/${id}`)
+		fetch(`https://genius-car-server-xi-one.vercel.app/services/${id}`)
 			.then(res => res.json())
 			.then(data => setService(data));
 	}, []);
@@ -29,7 +29,7 @@ const CheckOut = () => {
 			message,
 		};
 		console.log(order);
-		fetch(`http://localhost:8000/orders`, {
+		fetch(`https://genius-car-server-xi-one.vercel.app/orders`, {
 			method: "POST",
 			headers: {
 				"content-type": "application/json",

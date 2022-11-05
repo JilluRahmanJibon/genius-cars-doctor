@@ -4,7 +4,7 @@ const OrderRow = ({ order, setOrders, orders }) => {
 	const { customer, price, service, _id, status, serviceName, phone } = order;
 	const [orderService, setOrderService] = useState({});
 	useEffect(() => {
-		fetch(`http://localhost:8000/services/${service}`)
+		fetch(`https://genius-car-server-xi-one.vercel.app/services/${service}`)
 			.then(res => res.json())
 			.then(data => setOrderService(data));
 	}, [service]);
@@ -14,7 +14,9 @@ const OrderRow = ({ order, setOrders, orders }) => {
 			`are you sure, you want to cancel this "${serviceName}" order?`
 		);
 		if (proceed) {
-			fetch(`http://localhost:8000/orders/${id}`, { method: "DELETE" })
+			fetch(`https://genius-car-server-xi-one.vercel.app/orders/${id}`, {
+				method: "DELETE",
+			})
 				.then(res => res.json())
 				.then(result => {
 					if (result.deletedCount > 0) {
@@ -28,7 +30,7 @@ const OrderRow = ({ order, setOrders, orders }) => {
 	};
 
 	const handleUpdate = id => {
-		fetch(`http://localhost:8000/orders/${id}`, {
+		fetch(`https://genius-car-server-xi-one.vercel.app/orders/${id}`, {
 			method: "PATCH",
 			headers: {
 				"content-type": "application/json",

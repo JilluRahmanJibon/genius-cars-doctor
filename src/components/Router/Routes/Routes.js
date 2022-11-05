@@ -15,7 +15,14 @@ const Routes = createBrowserRouter([
 			{ path: "/", element: <Home /> },
 			{ path: "/signin", element: <SignIn /> },
 			{ path: "/signup", element: <SignUp /> },
-			{ path: "/checkout/:id", element: <CheckOut /> },
+			{
+				path: "/checkout/:id",
+				element: (
+					<PrivateRouter>
+						<CheckOut />{" "}
+					</PrivateRouter>
+				),
+			},
 			{
 				path: "/orders",
 				element: (

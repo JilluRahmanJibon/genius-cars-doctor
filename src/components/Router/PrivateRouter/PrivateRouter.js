@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
 const PrivateRouter = ({ children }) => {
 	const location = useLocation();
 
-	const { user, loading, setLoading } = useContext(AuthContext);
+	const { user, loading } = useContext(AuthContext);
 	if (loading) {
-		return setLoading(true);
+		return;
 	}
-	if (!user) {
-		return <NavLink to="/signin" state={{ from: location }} replace />;
+	if (user?.uid) {
+		return children;
 	}
-	return children;
+	return <Navigate to="/signin" state={{ from: location }} replace />;
 };
 
 export default PrivateRouter;

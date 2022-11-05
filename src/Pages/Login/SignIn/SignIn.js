@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../components/Contexts/AuthProvider/AuthProvider";
 import image from "../../assets/images/login/login.svg";
 const SignIn = () => {
 	const { signInUserWithEmailPass } = useContext(AuthContext);
+	const location = useLocation();
+	const navigate = useNavigate();
+	const from = location.state?.from?.pathname || "/";
 	const handleSignIn = e => {
 		e.preventDefault();
 		const form = e.target;
@@ -13,9 +16,26 @@ const SignIn = () => {
 		signInUserWithEmailPass(email, password)
 			.then(result => {
 				const user = result.user;
-				console.log(user);
+				const currentUser = {
+					email: user.email,
+				};
+
+				// get jwt token
+				fetch("https://genius-car-server-xi-one.vercel.app/jwt", {
+					method: "POST",
+					headers: {
+						"content-type": "application/json",
+					},
+					body: JSON.stringify(currentUser),
+				})
+					.then(res => res.json())
+					.then(data => {
+						// local storage is the easiest but not the best place to store jwt token
+						localStorage.setItem("genius-token", data.token);
+						navigate(from, { replace: true });
+					});
 			})
-			.then(error => console.error(error));
+			.catch(error => console.error(error));
 	};
 	return (
 		<div className="hero min-h-screen  ">

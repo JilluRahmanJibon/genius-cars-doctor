@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import {
 	getAuth,
+	signOut,
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 	onAuthStateChanged,
@@ -25,7 +26,15 @@ const AuthProvider = ({ children }) => {
 		setLoading(true);
 		return signInWithEmailAndPassword(auth, email, password);
 	};
-
+	const signOutUser = () => {
+		signOut(auth)
+			.then(() => {
+				localStorage.removeItem("genius-token" );
+			})
+			.catch(error => {
+				// An error happened.
+			});
+	};
 	// manage user
 	useEffect(() => {
 		const unSubscribe = onAuthStateChanged(auth, currentUser => {
@@ -39,6 +48,7 @@ const AuthProvider = ({ children }) => {
 	// auth info
 	const value = {
 		user,
+		signOutUser,
 		loading,
 		setLoading,
 		createUserWithEmailandPass,
